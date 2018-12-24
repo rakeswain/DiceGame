@@ -1,4 +1,4 @@
-var score,dice,dice_one,activePlayer,gamePlaying=true,prevScore,limit=20;
+var score,dice,dice_one,activePlayer,gamePlaying=true,prevScore,prevScore_dice_one,limit=20;
 activePlayer = 0 ;
 score=[0,0];
 var randomScore=0;
@@ -21,17 +21,17 @@ document.querySelector(".btn-roll").addEventListener('click', function(){
         dice_two_DOM.style.display="block";
         diceDOM.src = "dice-"+dice+".png";
         dice_two_DOM.src="dice-"+dice_one+".png";
-        if(dice!==1)
+        if(dice!==1||dice_one!==1)
         {
             
-             randomScore +=dice;
+             randomScore +=(dice+dice_one);
              document.querySelector("#current-"+activePlayer).textContent=randomScore;
         }else{
            
             alert("Got One!");
              nextPlayer();
         }
-        if(prevScore===6)
+        if(prevScore===6||prevScore==dice_one)
         { 
           
             alert("Double Six");
@@ -42,6 +42,7 @@ document.querySelector(".btn-roll").addEventListener('click', function(){
             
         }else{
             prevScore=dice;
+            prevScore_dice_one = dice_one;
         }
         if(score[activePlayer]>=limit)
         {
@@ -74,6 +75,7 @@ function nextPlayer ()
 {
    
     prevScore=0;
+    prevScore_dice_one=0
     randomScore=0;
     activePlayer===0?activePlayer=1:activePlayer=0;
     document.querySelector(".player-0-panel").classList.toggle("active");
